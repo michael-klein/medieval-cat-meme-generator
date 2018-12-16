@@ -17,6 +17,7 @@ const galleryClass = css`
   grid-row-gap: 20px;
   justify-items: stretch;
   align-items: center;
+  padding-top: 10px;
   figure {
     width: 100%;
     margin: 0;

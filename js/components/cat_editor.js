@@ -124,7 +124,6 @@ export default class CatEditor extends Component {
         height: auto;
       }
 
-      overflow: hidden;
       position: relative;
       display: flex;
       justify-content: center;
@@ -136,9 +135,17 @@ export default class CatEditor extends Component {
         grid-row-gap: 0px;
         align-items: start;
 
+        box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
+          0 5px 15px 0 rgba(0, 0, 0, 0.08);
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
         @media only screen and (max-width: 900px) {
+          border-top-right-radius: 0px;
+          border-bottom-left-radius: 15px;
           grid-template-columns: auto;
         }
+
+        overflow: hidden;
 
         .canvas-container {
           position: absolute !important;

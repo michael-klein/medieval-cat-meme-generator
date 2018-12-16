@@ -4,12 +4,6 @@ const { css } = emotion;
 const optionsClass = css`
   background: #80808094;
   padding: 15px;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
-  @media only screen and (max-width: 900px) {
-    border-top-right-radius: 0px;
-    border-bottom-left-radius: 15px;
-  }
   align-self: stretch;
   display: flex;
   flex-direction: column;
