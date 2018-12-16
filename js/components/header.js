@@ -9,6 +9,24 @@ const headerClass = css`
   z-index: 1000;
   color: white;
   font-size: 2em;
+  @media only screen and (max-width: 900px) {
+    font-size: 1.5em;
+  }
+  @media only screen and (max-width: 700px) {
+    font-size: 1em;
+  }
+  .github-corner {
+    width: 130px;
+    height: 130px;
+    @media only screen and (max-width: 900px) {
+      width: 100px;
+      height: 100px;
+    }
+    @media only screen and (max-width: 700px) {
+      width: 60px;
+      height: 60px;
+    }
+  }
   .container {
     display: flex;
     justify-content: center;
@@ -26,7 +44,8 @@ const headerClass = css`
     .title {
       flex: auto;
       text-align: center;
-      padding-right: 50px;
+      padding-right: 60px;
+      padding-left: 10px;
     }
   }
   .github-corner {
@@ -65,8 +84,7 @@ export default ({ catTexts, onDownload }) => {
         class="github-corner"
         aria-label="View source on GitHub"
         ><svg
-          width="130"
-          height="130"
+          class="github-corner"
           viewBox="0 0 250 250"
           style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
           aria-hidden="true"

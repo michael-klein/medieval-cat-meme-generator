@@ -1,6 +1,6 @@
 import { html, Component } from "https://unpkg.com/htm/preact/standalone.mjs";
 import CatOptions from "./cat_options.js";
-const { css } = emotion;
+const { css, injectGlobal } = emotion;
 
 const imgClass = css`
   position: relative;
@@ -21,6 +21,26 @@ export default class CatEditor extends Component {
     this.onDownload = this.onDownload.bind(this);
   }
   imgLoad(event) {
+    if (!this.initialized) {
+      this.initialized = true;
+      setTimeout(
+        () => injectGlobal`
+        body {
+          #loader-overlay{
+            display:none;
+          }
+        }
+    `,
+        500
+      );
+      injectGlobal`
+        body {
+          #loader-overlay{
+            opacity: 0;
+          }
+        }
+      `;
+    }
     this.setState({
       height: event.target.clientHeight
     });
