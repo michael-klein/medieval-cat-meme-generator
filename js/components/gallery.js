@@ -54,7 +54,7 @@ export default () => {
                         });
                       }
                     }"
-                    src="./cats/cat_${index}.jpg"
+                    src="./cats/thumbs/cat_${index}.jpg"
                   />
                 </figure>
               `
