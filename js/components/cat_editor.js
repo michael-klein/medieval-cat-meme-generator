@@ -13,14 +13,15 @@ export default class CatEditor extends Component {
   constructor(props) {
     super(props);
     this.containerRef = this.containerRef.bind(this);
-    this.imgLoad = this.imgLoad.bind(this);
+    this.imgLoaded = this.imgLoaded.bind(this);
     this.state = {
       height: 0
     };
     this.fabricTexts = [];
     this.onDownload = this.onDownload.bind(this);
   }
-  imgLoad(event) {
+  imgLoaded() {
+    const image = document.getElementById("cat-img");
     if (!this.initialized) {
       this.initialized = true;
       setTimeout(
@@ -42,18 +43,18 @@ export default class CatEditor extends Component {
       `;
     }
     this.setState({
-      height: event.target.clientHeight
+      height: image.clientHeight
     });
     this.currentFabric
-      .setWidth(event.target.clientWidth)
-      .setHeight(event.target.clientHeight);
+      .setWidth(image.clientWidth)
+      .setHeight(image.clientHeight);
     if (this.currentImage) this.currentFabric.remove(this.currentImage);
-    this.currentImage = new fabric.Image(event.target, {
+    this.currentImage = new fabric.Image(image, {
       left: 0,
       top: 0,
       selectable: false
     });
-    this.currentImage.scaleToWidth(event.target.clientWidth);
+    this.currentImage.scaleToWidth(image.clientWidth);
     this.currentFabric.add(this.currentImage);
     this.setTexts(this.props.catTexts);
   }
@@ -67,7 +68,7 @@ export default class CatEditor extends Component {
         fabricText = new fabric.Text(text, {
           fontSize: 40,
           fontFamily: "IM Fell DW Pica",
-          top: 40 + 50 * index,
+          top: Math.min(40 + 50 * index, this.currentFabric.height - 40),
           left: this.currentFabric.width / 2,
           stroke: "#000000",
           strokeWidth: 8,
@@ -81,36 +82,16 @@ export default class CatEditor extends Component {
           originY: "center",
           centeredScaling: true
         });
-        while (
-          fabricText.fontSize > 0 &&
-          fabricText.calcTextWidth() > this.currentFabric.width - 20
-        ) {
-          fabricText = new fabric.Text(text, {
-            fontSize: fabricText.fontSize - 1,
-            fontFamily: "IM Fell DW Pica",
-            top: 40 + 50 * index,
-            left: this.currentFabric.width / 2,
-            stroke: "#000000",
-            strokeWidth: 8,
-            fill: "#ffffff",
-            textAlign: "center",
-            paintFirst: "stroke",
-            objecttype: "text",
-            lockRotation: true,
-            lockScalingFlip: true,
-            originX: "center",
-            originY: "center",
-            centeredScaling: true
-          });
-        }
       }
       fabricText.text = text;
+      this.handlePosition(fabricText);
+      this.handleScale(fabricText);
       this.currentFabric.add(fabricText);
       return fabricText;
     });
   }
-  handlePosition(text, transform) {
-    const width = text.width * transform.scaleX;
+  handlePosition(text) {
+    const width = text.width * text.scaleX;
     let positionAdjusted = false;
     if (text.left - width / 2 <= 0) {
       text.left = width / 2;
@@ -120,7 +101,7 @@ export default class CatEditor extends Component {
       text.left = this.currentFabric.width - width / 2;
       positionAdjusted = true;
     }
-    const height = text.height * transform.scaleY;
+    const height = text.height * text.scaleY;
     if (text.top - height / 2 <= 0) {
       text.top = height / 2;
       positionAdjusted = true;
@@ -131,6 +112,28 @@ export default class CatEditor extends Component {
     }
     return positionAdjusted;
   }
+  handleScale(text) {
+    const targetWidth = this.currentFabric.width - 10;
+    while (
+      (text.width * text.scaleX > targetWidth ||
+        text.left - (text.width * text.scaleX) / 2 < 10 ||
+        text.left + (text.width * text.scaleX) / 2 > targetWidth) &&
+      text.scaleX > 0.1
+    ) {
+      text.scaleX -= 0.01;
+    }
+    text.scaleY = text.scaleX;
+    const targetHeight = this.currentFabric.height - 10;
+    while (
+      (text.height * text.scaleY > targetHeight ||
+        text.top - (text.height * text.scaleY) / 2 < 10 ||
+        text.top + (text.height * text.scaleY) / 2 > targetHeight) &&
+      text.scaleY > 0.1
+    ) {
+      text.scaleY -= 0.01;
+    }
+    text.scaleX = text.scaleY;
+  }
   containerRef(container) {
     if (container) {
       if (this.currentFabric) {
@@ -140,39 +143,22 @@ export default class CatEditor extends Component {
         container.appendChild(canvas);
         this.currentFabric = new fabric.Canvas(canvas);
         this.currentFabric.on("object:moving", ({ e, target, transform }) => {
-          if (this.handlePosition(target, transform)) {
+          if (this.handlePosition(target)) {
             e.preventDefault();
             return false;
           }
         });
-        this.currentFabric.on("object:scaling", ({ e, target, transform }) => {
-          if (transform.action === "scaleX" || transform.action === "scale") {
-            const width = target.width * target.scaleX;
-            if (width > this.currentFabric.width) {
-              target.scaleX = this.currentFabric.width / target.width;
-            }
-            if (target.scaleX < 0.2) {
-              target.scaleX = 0.2;
-            }
-            target.scaleY = target.scaleX;
-          }
-          if (transform.action === "scaleY" || transform.action === "scale") {
-            const height = target.height * target.scaleY;
-            if (height > this.currentFabric.height) {
-              target.scaleY = this.currentFabric.height / target.height;
-            }
-            if (target.scaleY < 0.2) {
-              target.scaleY = 0.2;
-            }
-            target.scaleX = target.scaleY;
-          }
-          console.log(target);
+        this.currentFabric.on("object:scaling", ({ target, transform }) => {
+          this.handleScale(target);
         });
       }
     }
   }
   componentDidUpdate() {
     this.setTexts(this.props.catTexts);
+  }
+  componentDidMount() {
+    window.addEventListener("resize", () => this.imgLoaded());
   }
   onDownload(e) {
     const a = e.target;
@@ -222,7 +208,7 @@ export default class CatEditor extends Component {
           <div class="${containerClass} container">
             <div id="canvas-container" ref="${this.containerRef}">
               <img
-                onLoad="${this.imgLoad}"
+                onLoad="${this.imgLoaded}"
                 class="${imgClass}"
                 id="cat-img"
                 src="./cats/cat_${selectedCat}.jpg"

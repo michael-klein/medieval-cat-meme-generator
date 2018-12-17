@@ -34,6 +34,13 @@ const optionsClass = css`
       content: "↡";
     }
   }
+  a.translate {
+    color: #690000 !important;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
   div.spacer {
     flex: auto;
   }
@@ -67,6 +74,12 @@ export default ({ catTexts, onDownload }) => {
       } <button onClick="${onClick}">Addeth</button>
       <div class="spacer"></div>
       <a class="download" onClick="${onDownload}">Receiveth image</a>
+      <a
+        href="https://lingojam.com/EnglishtoShakespearean"
+        target="_blank"
+        class="translate"
+        >Translateth to the ancient tongue ↣</a
+      >
     </div>
   `;
 };
