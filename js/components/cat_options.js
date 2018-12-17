@@ -8,17 +8,20 @@ const optionsClass = css`
   display: flex;
   flex-direction: column;
   input,
-  button {
+  button,
+  a.download {
     border: none;
     padding: 5px;
     background: #0000007d;
+    text-align: center;
     color: white;
     width: 100%;
     flex: 0;
     margin-bottom: 10px;
     min-height: 28px;
   }
-  button {
+  button,
+  a.download {
     background: #313131;
     position: relative;
     cursor: pointer;
@@ -63,7 +66,7 @@ export default ({ catTexts, onDownload }) => {
         )
       } <button onClick="${onClick}">Addeth</button>
       <div class="spacer"></div>
-      <button class="download" onClick="${onDownload}">Receiveth image</button>
+      <a class="download" onClick="${onDownload}">Receiveth image</a>
     </div>
   `;
 };

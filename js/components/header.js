@@ -1,5 +1,4 @@
 import { html } from "https://unpkg.com/htm/preact/standalone.mjs";
-import store from "../store.js";
 const { css } = emotion;
 const headerClass = css`
   background: #690000;
@@ -76,7 +75,7 @@ const headerClass = css`
     }
   }
 `;
-export default ({ catTexts, onDownload }) => {
+export default () => {
   return html`
     <header class="${headerClass}">
       <a

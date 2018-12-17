@@ -67,16 +67,42 @@ export default class CatEditor extends Component {
         fabricText = new fabric.Text(text, {
           fontSize: 40,
           fontFamily: "IM Fell DW Pica",
-          top: 10 + 50 * index,
-          left: 10,
+          top: 40 + 50 * index,
+          left: this.currentFabric.width / 2,
           stroke: "#000000",
           strokeWidth: 8,
           fill: "#ffffff",
           textAlign: "center",
           paintFirst: "stroke",
           objecttype: "text",
-          lockRotation: true
+          lockRotation: true,
+          lockScalingFlip: true,
+          originX: "center",
+          originY: "center",
+          centeredScaling: true
         });
+        while (
+          fabricText.fontSize > 0 &&
+          fabricText.calcTextWidth() > this.currentFabric.width - 20
+        ) {
+          fabricText = new fabric.Text(text, {
+            fontSize: fabricText.fontSize - 1,
+            fontFamily: "IM Fell DW Pica",
+            top: 40 + 50 * index,
+            left: this.currentFabric.width / 2,
+            stroke: "#000000",
+            strokeWidth: 8,
+            fill: "#ffffff",
+            textAlign: "center",
+            paintFirst: "stroke",
+            objecttype: "text",
+            lockRotation: true,
+            lockScalingFlip: true,
+            originX: "center",
+            originY: "center",
+            centeredScaling: true
+          });
+        }
       }
       fabricText.text = text;
       this.currentFabric.add(fabricText);
@@ -86,21 +112,21 @@ export default class CatEditor extends Component {
   handlePosition(text, transform) {
     const width = text.width * transform.scaleX;
     let positionAdjusted = false;
-    if (text.left <= 0) {
-      text.left = 0;
+    if (text.left - width / 2 <= 0) {
+      text.left = width / 2;
       positionAdjusted = true;
     }
-    if (text.left + width >= this.currentFabric.width) {
-      text.left = this.currentFabric.width - width;
+    if (text.left + width / 2 >= this.currentFabric.width) {
+      text.left = this.currentFabric.width - width / 2;
       positionAdjusted = true;
     }
     const height = text.height * transform.scaleY;
-    if (text.top <= 0) {
-      text.top = 0;
+    if (text.top - height / 2 <= 0) {
+      text.top = height / 2;
       positionAdjusted = true;
     }
-    if (text.top + height >= this.currentFabric.height) {
-      text.top = this.currentFabric.height - height;
+    if (text.top + height / 2 >= this.currentFabric.height) {
+      text.top = this.currentFabric.height - height / 2;
       positionAdjusted = true;
     }
     return positionAdjusted;
@@ -119,8 +145,28 @@ export default class CatEditor extends Component {
             return false;
           }
         });
-        this.currentFabric.on("object:scaling", function() {
-          console.log(arguments);
+        this.currentFabric.on("object:scaling", ({ e, target, transform }) => {
+          if (transform.action === "scaleX" || transform.action === "scale") {
+            const width = target.width * target.scaleX;
+            if (width > this.currentFabric.width) {
+              target.scaleX = this.currentFabric.width / target.width;
+            }
+            if (target.scaleX < 0.2) {
+              target.scaleX = 0.2;
+            }
+            target.scaleY = target.scaleX;
+          }
+          if (transform.action === "scaleY" || transform.action === "scale") {
+            const height = target.height * target.scaleY;
+            if (height > this.currentFabric.height) {
+              target.scaleY = this.currentFabric.height / target.height;
+            }
+            if (target.scaleY < 0.2) {
+              target.scaleY = 0.2;
+            }
+            target.scaleX = target.scaleY;
+          }
+          console.log(target);
         });
       }
     }
@@ -128,13 +174,10 @@ export default class CatEditor extends Component {
   componentDidUpdate() {
     this.setTexts(this.props.catTexts);
   }
-  onDownload() {
-    const a = document.createElement("a");
-    document.body.appendChild(a);
+  onDownload(e) {
+    const a = e.target;
     a.href = this.currentFabric.toDataURL();
     a.download = "dank_cat_meme.jpg";
-    a.click();
-    document.body.removeChild(a);
   }
   render({ selectedCat, catTexts }) {
     const containerClass = css`
