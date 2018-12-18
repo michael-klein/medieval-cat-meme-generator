@@ -19,7 +19,6 @@ export default class CatEditor extends Component {
     };
     this.fabricTexts = [];
     this.onDownload = this.onDownload.bind(this);
-    this.init = true;
   }
   imgLoaded() {
     const image = document.getElementById("cat-img");
@@ -65,7 +64,9 @@ export default class CatEditor extends Component {
     });
     this.fabricTexts = catTexts.map((text, index) => {
       let fabricText = this.fabricTexts[index];
+      let newText = false;
       if (!fabricText) {
+        newText = true;
         fabricText = new fabric.Text(text, {
           fontSize: 40,
           fontFamily: "IM Fell DW Pica",
@@ -85,8 +86,7 @@ export default class CatEditor extends Component {
         });
       }
       fabricText.text = text;
-      if (!this.init) this.handlePosition(fabricText);
-      this.init = false;
+      if (!newText) this.handlePosition(fabricText);
       this.handleScale(fabricText);
       this.currentFabric.add(fabricText);
       return fabricText;
