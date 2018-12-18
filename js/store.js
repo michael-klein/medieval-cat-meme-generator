@@ -1,5 +1,5 @@
 const { createStore } = Redux;
-const defaultText = ["Ent'r thy text...", "...to maketh a dank meme!"];
+const defaultText = ["Ent'r thy text...".toUpperCase(), "...to maketh a dank meme!".toUpperCase()];
 const initialState = {
   selectedCat: Math.round(Math.random() * 55),
   catTexts: Object.assign([], defaultText)
@@ -15,7 +15,7 @@ function store(state = initialState, action) {
         catTexts: Object.assign([], defaultText)
       });
     case "UPDATE_TEXT":
-      state.catTexts[action.index] = action.text;
+      state.catTexts[action.index] = action.text.toUpperCase();
       return state;
     case "ADD_TEXT":
       state.catTexts.push("Writeth something...");
