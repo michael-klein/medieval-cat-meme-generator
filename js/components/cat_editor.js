@@ -83,7 +83,7 @@ export default class CatEditor extends Component {
           centeredScaling: true
         });
       }
-      fabricText.text = text;
+      fabricText.text = text.toUpperCase();
       this.handlePosition(fabricText);
       this.handleScale(fabricText);
       this.currentFabric.add(fabricText);
