@@ -65,7 +65,7 @@ export default class CatEditor extends Component {
     this.fabricTexts = catTexts.map((text, index) => {
       let fabricText = this.fabricTexts[index];
       if (!fabricText) {
-        fabricText = new fabric.Text(text.toUpperCase(), {
+        fabricText = new fabric.Text(text, {
           fontSize: 40,
           fontFamily: "IM Fell DW Pica",
           top: Math.min(40 + 50 * index, this.currentFabric.height - 40),
@@ -83,7 +83,7 @@ export default class CatEditor extends Component {
           centeredScaling: true
         });
       }
-      fabricText.text = text.toUpperCase();
+      fabricText.text = text;
       this.handlePosition(fabricText);
       this.handleScale(fabricText);
       this.currentFabric.add(fabricText);
