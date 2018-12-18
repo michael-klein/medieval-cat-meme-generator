@@ -65,7 +65,7 @@ export default class CatEditor extends Component {
     this.fabricTexts = catTexts.map((text, index) => {
       let fabricText = this.fabricTexts[index];
       if (!fabricText) {
-        fabricText = new fabric.Text(text, {
+        fabricText = new fabric.Text(text.toUpperCase(), {
           fontSize: 40,
           fontFamily: "IM Fell DW Pica",
           top: Math.min(40 + 50 * index, this.currentFabric.height - 40),
