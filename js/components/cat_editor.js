@@ -19,6 +19,7 @@ export default class CatEditor extends Component {
     };
     this.fabricTexts = [];
     this.onDownload = this.onDownload.bind(this);
+    this.init = true;
   }
   imgLoaded() {
     const image = document.getElementById("cat-img");
@@ -84,7 +85,8 @@ export default class CatEditor extends Component {
         });
       }
       fabricText.text = text;
-      this.handlePosition(fabricText);
+      if (!this.init) this.handlePosition(fabricText);
+      this.init = false;
       this.handleScale(fabricText);
       this.currentFabric.add(fabricText);
       return fabricText;
