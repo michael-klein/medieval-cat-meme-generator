@@ -162,7 +162,9 @@ export default class CatEditor extends Component {
   }
   onDownload(e) {
     const a = e.target;
-    a.href = this.currentFabric.toDataURL();
+    a.href = this.currentFabric.toDataURL({
+      format: 'jpeg'
+    });
     a.download = "dank_cat_meme.jpg";
   }
   render({ selectedCat, catTexts }) {
