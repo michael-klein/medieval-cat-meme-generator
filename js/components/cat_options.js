@@ -1,4 +1,4 @@
-import { html } from "https://unpkg.com/htm/preact/standalone.mjs";
+import { html } from "https://unpkg.com/htm@1.0.1/preact/standalone.mjs";
 import store from "../store.js";
 const { css } = emotion;
 const optionsClass = css`
