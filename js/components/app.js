@@ -1,4 +1,4 @@
-import { html, Component } from "https://unpkg.com/htm/preact/standalone.mjs";
+import { html, Component } from "https://unpkg.com/htm@1.0.1/preact/standalone.mjs";
 import store from "../store.js";
 import Gallery from "./gallery.js";
 import Header from "./header.js";
