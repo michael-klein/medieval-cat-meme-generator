@@ -1,4 +1,4 @@
-import { html, Component } from "https://unpkg.com/htm/preact/standalone.mjs";
+import { html, Component } from "https://unpkg.com/htm@1.0.1/preact/standalone.mjs";
 import CatOptions from "./cat_options.js";
 const { css, injectGlobal } = emotion;
 
