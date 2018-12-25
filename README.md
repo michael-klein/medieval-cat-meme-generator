@@ -8,12 +8,12 @@ One goal of this project was to build it without a build pipeline, but use the l
 All libraries are loaded through CDNs and if possible imported as es6 modules.
 
 Here's everything that was used to build this:
-* [https://preactjs.com/](Preact)
-* [https://github.com/developit/htm](HTM)
-* [https://redux.js.org](Redux)
-* [emotion.sh/](Emotion)
-* [fabricjs.com/](FabricJS)
-* [https://necolas.github.io/normalize.css/](Normalize)
+* [Preact](https://preactjs.com/)
+* [HTM](https://github.com/developit/htm)
+* [Redux](https://redux.js.org)
+* [Emotion](https://emotion.sh/)
+* [FabricJS](http://fabricjs.com/)
+* [Normalize](https://necolas.github.io/normalize.css/)
 
 ## Licence
 MIT License
