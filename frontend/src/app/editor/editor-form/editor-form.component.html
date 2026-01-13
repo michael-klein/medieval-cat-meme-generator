@@ -1,0 +1,7 @@
+<div class="inputs">
+  @for (fabricText of editorService.fabricTexts(); track $index) {
+  <app-editor-form-input [fabricText]="fabricText"></app-editor-form-input>
+  }
+  <button (click)="editorService.addNewText()">Addeth</button>
+</div>
+<button class="download" (click)="editorService.onDownload()">Receiveth image</button>

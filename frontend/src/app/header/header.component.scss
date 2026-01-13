@@ -1,0 +1,77 @@
+header {
+  top: 0;
+  position: sticky;
+  background: #690000;
+  width: 100%;
+  z-index: 1000;
+  color: white;
+  font-size: 2em;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  @media only screen and (max-width: 900px) {
+    font-size: 1.5em;
+  }
+  @media only screen and (max-width: 700px) {
+    font-size: 1em;
+  }
+}
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+figure {
+  min-width: 50px;
+  min-height: 50px;
+  border-radius: 50%;
+  background: url(/img/derpcat.png);
+  background-size: contain;
+  margin: 0;
+  padding: 0%;
+  flex: 0;
+}
+.title {
+  flex: auto;
+  text-align: center;
+  padding-right: 60px;
+  padding-left: 10px;
+}
+
+.github-corner {
+  width: 130px;
+  height: 130px;
+  @media only screen and (max-width: 900px) {
+    width: 100px;
+    height: 100px;
+  }
+  @media only screen and (max-width: 700px) {
+    width: 60px;
+    height: 60px;
+  }
+}
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out;
+}
+@keyframes octocat-wave {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
+}
+@media (max-width: 500px) {
+  .github-corner:hover .octo-arm {
+    animation: none;
+  }
+  .github-corner .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+  }
+}

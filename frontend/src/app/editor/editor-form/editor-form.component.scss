@@ -1,0 +1,36 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  background: #80808094;
+  padding: 15px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  min-height: 100%;
+}
+
+.inputs {
+  flex: auto;
+}
+
+button {
+  border: none;
+  padding: 5px;
+  background: #313131;
+  text-align: center;
+  color: white;
+  width: 100%;
+  margin-bottom: 10px;
+  min-height: 28px;
+  cursor: pointer;
+  position: relative;
+  padding-left: 25px;
+
+  &:before {
+    content: "+";
+    position: absolute;
+    left: 10px;
+  }
+  &.download:before {
+    content: "↡";
+  }
+}

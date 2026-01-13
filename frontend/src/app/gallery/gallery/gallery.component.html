@@ -1,0 +1,5 @@
+<app-container class="gallery">
+  @for (imageSrc of editorService.images; track $index) {
+  <app-gallery-item [imgSrc]="imageSrc"></app-gallery-item>
+  }
+</app-container>

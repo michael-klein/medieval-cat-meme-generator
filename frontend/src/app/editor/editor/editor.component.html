@@ -1,0 +1,11 @@
+<app-container class="editor">
+  <div class="image-container">
+    <img #image [src]="editorService.currentImagePath()" />
+    <div class="canvas-container">
+      <canvas #canvas></canvas>
+    </div>
+  </div>
+  <div class="form-container">
+    <app-editor-form></app-editor-form>
+  </div>
+</app-container>

@@ -1,0 +1,27 @@
+.editor {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  display: flex;
+  .image-container {
+    position: relative;
+    img {
+      max-width: 100%;
+      opacity: 0;
+    }
+    .canvas-container {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 100;
+    }
+  }
+  .form-container {
+    flex: auto;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .editor {
+    display: block;
+  }
+}

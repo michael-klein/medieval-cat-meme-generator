@@ -1,0 +1,87 @@
+div {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 10px;
+  input {
+    flex: auto;
+    border: none;
+    padding: 5px;
+    background: #0000007d;
+    text-align: center;
+    color: white;
+    min-height: 28px;
+    &[disabled] {
+      opacity: 0.6;
+    }
+  }
+  button {
+    border: none;
+    padding: 5px;
+    background: #313131;
+    color: white;
+    cursor: pointer;
+    min-height: 28px;
+    min-width: 28px;
+    &:not([disabled]):hover {
+      background: rgb(76, 76, 76);
+    }
+    &:last-child {
+      border-left: 1px solid rgb(61, 61, 61);
+    }
+  }
+  .button-label {
+    display: inline-block;
+  }
+  button[disabled] .button-label {
+    animation: rotate 1s linear infinite;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.tooltip-trigger {
+  position: relative;
+}
+
+.tooltip {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 8px;
+  padding: 8px 12px;
+  background: #333;
+  color: #fff;
+  font-size: 14px;
+  white-space: nowrap;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+  pointer-events: none;
+  z-index: 1000;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-left-color: #333;
+  }
+}
+
+.tooltip-trigger:hover .tooltip,
+.tooltip-trigger:focus .tooltip {
+  opacity: 1;
+  visibility: visible;
+}

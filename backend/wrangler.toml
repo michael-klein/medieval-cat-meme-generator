@@ -1,0 +1,11 @@
+name = "medieval-cat-meme-generator-backend"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "90e290a1ec1c44f290a1f00eed344907"
+preview_id = "preview_id"
+
+[observability]
+enabled = true

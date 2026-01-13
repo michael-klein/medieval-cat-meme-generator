@@ -1,0 +1,15 @@
+figure {
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  img {
+    width: 100%;
+    border: 2px solid #690000;
+    &:hover {
+      transform: scale(1.2);
+      transition: transform 200ms;
+      z-index: 100;
+      cursor: pointer;
+    }
+  }
+}

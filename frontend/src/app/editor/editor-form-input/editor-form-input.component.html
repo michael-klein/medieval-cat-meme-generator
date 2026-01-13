@@ -1,0 +1,26 @@
+<div>
+  <input
+    [disabled]="translationRunning()"
+    [(ngModel)]="formControl"
+    placeholder="Enter text"
+    [id]="formElementId"
+  /><button
+    [disabled]="translationRunning()"
+    (click)="onTranslateClick()"
+    class="tooltip-trigger"
+    [attr.aria-describedby]="tooltipId"
+  >
+    <span class="button-label">{{ translationRunning() ? "⟳" : "T" }}</span>
+    <span role="tooltip" [id]="tooltipId" class="tooltip"
+      >Translateth to the ancient tongue</span
+    ></button
+  ><button
+    [disabled]="translationRunning()"
+    (click)="onRemoveClick()"
+    class="tooltip-trigger"
+    [attr.aria-describedby]="'tooltipId' + 2"
+  >
+    <span class="button-label">x</span>
+    <span role="tooltip" [id]="'tooltipId' + 2" class="tooltip">remove</span>
+  </button>
+</div>

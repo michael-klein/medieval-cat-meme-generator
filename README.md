@@ -1,39 +1,139 @@
 # Medieval Cat Meme Generator
 
-This is the source for: https://michael-klein.github.io/medieval-cat-meme-generator/
+A modern reimplementation of the medieval cat meme generator using Angular 19 and Cloudflare Workers.
 
-This is a little thing I made for fun and after seeing so many people claim that soon the EU will ban memes. So here's a meme generator that only uses medieval cat images that are in the public domain.
+## Quick Links
 
-One goal of this project was to build it without a build pipeline, but use the latest JS features. No babel or webpack. Consequently this will probably only work in the latest browsers (chrome, firefox).
-All libraries are loaded through CDNs and if possible imported as es6 modules.
+- **[QUICKSTART.md](QUICKSTART.md)** - Get started in 5 minutes
+- **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Detailed project structure and architecture
+- **Original Project**: The old implementation has been moved to `/old` (untracked)
 
-Here's everything that was used to build this:
-* [Preact](https://preactjs.com/)
-* [HTM](https://github.com/developit/htm)
-* [Redux](https://redux.js.org)
-* [Emotion](https://emotion.sh/)
-* [FabricJS](http://fabricjs.com/)
-* [Normalize](https://necolas.github.io/normalize.css/)
+## Project Structure
 
-## Licence
-MIT License
+```
+.
+├── frontend/          # Angular 19 application
+├── backend/           # Cloudflare Worker (API)
+├── old/              # Original implementation (untracked)
+└── .env.local        # Local development environment variables
+```
 
-Copyright (c) [year] [fullname]
+## Prerequisites
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+- Node.js (v18 or higher)
+- npm
+- Cloudflare account (for deployment)
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+## Local Development
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+### Backend (Cloudflare Worker)
+
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+   The backend will run on `http://localhost:8787`
+
+### Frontend (Angular)
+
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm start
+   ```
+
+   The frontend will run on `http://localhost:4200`
+
+### Testing the API
+
+Once both servers are running, the frontend will automatically call the `/hello_world` endpoint on the backend and log the response to the browser console.
+
+## Deployment
+
+### Backend Deployment (Cloudflare Worker)
+
+1. Login to Cloudflare:
+   ```bash
+   cd backend
+   npx wrangler login
+   ```
+
+2. Deploy:
+   ```bash
+   npm run deploy
+   ```
+
+3. Update the frontend environment file with your deployed worker URL:
+   ```typescript
+   // frontend/src/environments/environment.ts
+   export const environment = {
+     production: true,
+     apiUrl: 'https://your-worker.your-subdomain.workers.dev'
+   };
+   ```
+
+### Frontend Deployment (Cloudflare Pages)
+
+1. Build the frontend:
+   ```bash
+   cd frontend
+   npm run build
+   ```
+
+2. Deploy to Cloudflare Pages:
+   ```bash
+   npx wrangler pages deploy dist/frontend/browser --project-name=medieval-cat-meme-generator
+   ```
+
+   Or connect your GitHub repository to Cloudflare Pages with these build settings:
+   - **Build command**: `cd frontend && npm install && npm run build`
+   - **Build output directory**: `frontend/dist/frontend/browser`
+   - **Root directory**: `/`
+
+## API Endpoints
+
+### GET /hello_world
+
+Returns a simple greeting message.
+
+**Response:**
+```
+hello back
+```
+
+## Technology Stack
+
+- **Frontend**: Angular 19, TypeScript, SCSS
+- **Backend**: Cloudflare Workers, TypeScript
+- **Deployment**: Cloudflare Pages (frontend), Cloudflare Workers (backend)
+
+## Development Notes
+
+- The backend uses Cloudflare Workers' fetch handler format
+- CORS is enabled for local development
+- The frontend uses Angular's standalone components (best practice for Angular 19)
+- Environment configuration is handled through Angular's environment files
+
+## License
+
+ISC
