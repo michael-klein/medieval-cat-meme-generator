@@ -1,24 +1,14 @@
 import {
   Component,
-  computed,
   effect,
   ElementRef,
   inject,
   signal,
   viewChild,
-  ViewChild,
 } from '@angular/core';
-import { EditorService } from '../EditorService';
 import { ContainerComponent } from '../../container/container.component';
-import {
-  BasicTransformEvent,
-  Canvas,
-  FabricImage,
-  FabricObject,
-  FabricText,
-  TPointerEvent,
-} from 'fabric';
 import { EditorFormComponent } from '../editor-form/editor-form.component';
+import { EditorService } from '../EditorService';
 
 @Component({
   selector: 'app-editor',
@@ -31,8 +21,25 @@ export class EditorComponent {
     viewChild.required<ElementRef<HTMLCanvasElement>>('canvas');
   protected image = viewChild.required<ElementRef<HTMLImageElement>>('image');
   protected editorService = inject(EditorService);
+  protected imageLoaded = signal(false);
+  protected showLoader = signal(false);
+  protected setImageLoaded() {
+    this.imageLoaded.set(true);
+  }
   constructor() {
     effect((onCleanup) => {
+      if (!this.imageLoaded()) {
+        const id = setTimeout(() => this.showLoader.set(true), 500);
+        onCleanup(() => {
+          clearTimeout(id);
+          this.showLoader.set(false);
+        });
+      }
+    });
+    effect((onCleanup) => {
+      if (!this.imageLoaded()) {
+        return;
+      }
       const image = this.image().nativeElement;
       const updateDimensions = () => {
         this.editorService.imageDimensions.set({
@@ -42,19 +49,8 @@ export class EditorComponent {
         });
       };
 
-      // Wait for image to load before setting dimensions
-      if (image.complete) {
-        updateDimensions();
-      } else {
-        image.onload = () => {
-          updateDimensions();
-        };
-      }
-
       const observer = new ResizeObserver(() => {
-        if (image.complete) {
-          updateDimensions();
-        }
+        updateDimensions();
       });
       observer.observe(image);
       onCleanup(() => {

@@ -1,6 +1,13 @@
 <app-container class="editor">
   <div class="image-container">
-    <img #image [src]="editorService.currentImagePath()" />
+    <img
+      #image
+      [src]="editorService.currentImagePath()"
+      (load)="setImageLoaded()"
+    />
+    @if (showLoader()) {
+    <div class="loader"></div>
+    }
     <div class="canvas-container">
       <canvas #canvas></canvas>
     </div>
