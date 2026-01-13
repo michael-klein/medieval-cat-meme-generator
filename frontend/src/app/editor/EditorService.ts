@@ -69,6 +69,7 @@ export class EditorService {
     this.fabricTexts.update((current) =>
       current.filter((text) => text !== textIn)
     );
+    this.canvas()?.remove(textIn);
   }
 
   public onDownload() {
