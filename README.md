@@ -1,11 +1,13 @@
 # Medieval Cat Meme Generator
 
+**Live App:** https://catmemes.michaelklein.io
+
 A modern reimplementation of the medieval cat meme generator using Angular 19 and Cloudflare Workers.
 
-## Quick Links
+## Production URLs
 
-- **[QUICKSTART.md](QUICKSTART.md)** - Get started in 5 minutes
-- **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Detailed project structure and architecture
+- **Frontend**: https://catmemes.michaelklein.io
+- **Backend API**: https://catsbackend.michaelklein.io
 - **Original Project**: The old implementation has been moved to `/old` (untracked)
 
 ## Project Structure
