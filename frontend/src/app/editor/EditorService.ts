@@ -216,6 +216,14 @@ export class EditorService {
         canvas.sendObjectToBack(bgImage);
         canvas.centerObject(bgImage);
         bgImage.scaleToWidth(this.imageDimensions().width);
+
+        // Ensure the image is fully loaded before rendering
+        const imgElement = this.imageDimensions().image;
+        if (!imgElement.complete) {
+          imgElement.onload = () => {
+            canvas.renderAll();
+          };
+        }
         onCleanup(() => {
           console.log('clean up');
           bgImage.dispose();

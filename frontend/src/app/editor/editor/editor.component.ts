@@ -34,12 +34,27 @@ export class EditorComponent {
   constructor() {
     effect((onCleanup) => {
       const image = this.image().nativeElement;
-      const observer = new ResizeObserver(() => {
+      const updateDimensions = () => {
         this.editorService.imageDimensions.set({
           width: image.clientWidth,
           height: image.clientHeight,
           image,
         });
+      };
+
+      // Wait for image to load before setting dimensions
+      if (image.complete) {
+        updateDimensions();
+      } else {
+        image.onload = () => {
+          updateDimensions();
+        };
+      }
+
+      const observer = new ResizeObserver(() => {
+        if (image.complete) {
+          updateDimensions();
+        }
       });
       observer.observe(image);
       onCleanup(() => {
